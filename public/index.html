@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja" ng-app="app">
+<meta charset="utf-8">
+<title>Chat</title>
+<style type="text/css">
+body {padding: 20px;}
+input {
+  width: 300px;
+  font-size: 20px;
+  padding: 4px;
+  border: solid 2px #ccc;
+  background-color: #f4f4f4;
+}
+</style>
+<script>
+var ws = new WebSocket('ws://localhost:8080');
+
+//コネクションが接続されたら
+ws.onopen = function(event) {
+  console.log('ハンドシェイク' + event)
+};
+
+//メッセージが送信されたら
+ws.onmessage = function(event) {
+  var comment = document.createElement('li');
+  comment.textContent = event.data; //nodeのテキスト内容を取得 .textContent;
+  document.getElementById('chat').appendChild(comment);
+};
+
+//コネクションが切断されたら
+ws.onclose = function(event) {
+  console.log('解除' + event)
+};
+
+// valueをサーバーへ送信
+function submit(textbox) {
+  ws.send(textbox.value); // input.value を送信する
+  textbox.value = ''; // input.value を空にする
+}
+</script>
+</head>
+<body>
+<input onkeydown="if (event.keyCode === 13) submit(this)">
+<ul id="chat">
+</ul>
+</body>
+</html>
