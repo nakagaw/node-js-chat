@@ -5,6 +5,13 @@
   "main": "app.js",
   "author": "",
   "license": "ISC",
+  "scripts" : {
+    "start": "node app"
+  }
+  "engines": {
+    "node": "0.10.26",
+    "npm": "1.4.3"
+  }
   "dependencies": {
     "ws": "^0.7.2"
   }
