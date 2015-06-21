@@ -1,17 +1,45 @@
 
 
-var WebSocketServer = require('ws').Server,
-      wss = new WebSocketServer({ port: 8080 });
+var server = require('http').createServer()
+    , fs = require('fs')
+    , mime= require('mime')
+    // , url  = require("url")
+    // , path = require("path")
+    , root = "./public/"
+    , port = 8080
+    , WebSocketServer = require('ws').Server
+    , WSS = new WebSocketServer({ "server" : server })
+    ;
 
-// var = CLIENTS=[]; //A
+// // Create HTTP Server
+// 参考：<a href="http://blog.myon.info/blog/2013-10-12/entry/" target="_blank">Node.jsで遊んだ (2) | とさいぬの隠し部屋</a>
+server.on('request', function (req, res) {
+  // Check File Path
+  var path;
+  if(req.url == '/') { // req.urlはアクセスされたURLを取得取得
+    path = root + './index.html';
+  }
+  else {
+    path = '.' + req.url;
+  }
+  // Read File and Write
+  fs.readFile(path, function (err, data) {
+    if(err) {
+      res.writeHead(404, {"Content-Type": "text/plain"});
+      return res.end(req.url + ' not found.');
+    }
+    var type = mime.lookup(path);
+    res.writeHead(200, {"Content-Type": type});
+    res.write(data);
+    res.end();
+  });
+})
+server.listen(port);
+console.log('http://localhost:' + port);
 
-var d = new Date();
-var n = d.toString();
-
-wss.on('connection', function (ws) {
-    // console.log('onconnection OK');
-
-    // CLIENTS.push(ws); //A
+// websocketserver
+WSS.on('connection', function (ws) {
+    console.log('onconnection OK');
 
     ws.on('open', function (message) {
         // console.log(message);
@@ -23,25 +51,12 @@ wss.on('connection', function (ws) {
     });
     ws.on('message', function (message) {
         console.log(message);
-        // sendAll(message); //A
-        broadcast(message); //B
-        // ws.close(); //コネクションを切断
+        broadcast(message);
     });
 });
 
-// A wsにはブロードキャストする機能がないので
-// 接続時に保存している配列を精査して全員にsendメソッドでメッセージを送ります。
-// 参考：http://dev.classmethod.jp/server-side/ws/
-// function sendAll (data) {
-//     for (var i=0; i<CLIENTS.length; i++) {
-//         CLIENTS[i].send("data: " + data);
-//     }
-// }
-
-//  B 配列ではなく、こちらをみてカスタマイズ
-// https://github.com/websockets/ws#server-sending-broadcast-data
 function broadcast(data) {
-  wss.clients.forEach(function each(client) {
+  WSS.clients.forEach(function each(client) {
     client.send(data);
   });
 };
