@@ -6,17 +6,25 @@ var WebSocketServer = require('ws').Server,
 // var = CLIENTS=[]; //A
 
 var d = new Date();
-var n = d.toString() + '：';
+var n = d.toString();
 
 wss.on('connection', function (ws) {
-    console.log('onconnection:' , ws._socket._connecting);
+    // console.log('onconnection OK');
+
     // CLIENTS.push(ws); //A
 
+    ws.on('open', function (message) {
+        // console.log(message);
+        broadcast(message);
+    });
+    ws.on('close', function (message) {
+        // console.log(message);
+        broadcast(message);
+    });
     ws.on('message', function (message) {
-        console.log(n + message);
-        
-        // sendAll(n + message); //A
-        broadcast(n + message); //B
+        console.log(message);
+        // sendAll(message); //A
+        broadcast(message); //B
         // ws.close(); //コネクションを切断
     });
 });
@@ -37,4 +45,6 @@ function broadcast(data) {
     client.send(data);
   });
 };
+
+
 
