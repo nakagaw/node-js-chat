@@ -7,7 +7,7 @@ var express = require('express')
     // , url  = require("url")
     // , path = require("path")
     , root = "./public/"
-    , port = 8080
+    , port = process.env.PORT || 8080 // process.env.PORT はユーザー環境のポート番号でのコネクションの受け入れ
     , WebSocketServer = require('ws').Server
     ;
 
