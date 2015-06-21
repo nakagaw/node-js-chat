@@ -69,7 +69,7 @@
 </style>
 <script>
 window.addEventListener('load', function () { //ページ初期表示時に実行
-  var host = location.origin.replace(/^(https|http)/, 'https')
+  var host = location.origin.replace(/^(https|http)/, 'wss')
         , ws = new WebSocket(host)
         , text = document.getElementById('textInput')
         , name = document.getElementById('nameInput')
