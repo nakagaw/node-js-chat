@@ -1,8 +1,13 @@
-# node-js-getting-started
+# node-js-chat-v0
 
-websocket-server がもうなくなってたので
 
+### module Install
 ```
-npm install nodejs-websocket
+npm install
+```
+
+### Start
+```
+node app.js
 ```
 
