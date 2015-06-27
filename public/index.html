@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja" ng-app="app">
 <meta charset="utf-8">
-<title>Chat</title>
+<title>Chat v0</title>
 <style type="text/css">
 
 .chat-input {
@@ -78,7 +78,6 @@ window.addEventListener('load', function () { //ページ初期表示時に実�
   //コネクションが接続されたら
   ws.onopen = function(event) {
     // どうやら ws.send とすると onmessage を通るっぽい
-    // ws.send(name.value + "さんが入室しました");
     ws.send("新メンバーが入室しました");
     console.log(event);
   };
