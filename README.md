@@ -49,6 +49,10 @@ node app.js
 
 
 # コードブロックのチェック
+code あかん```function myFunction() {
+  console.log("test");
+}```
+
 
 code あかん
 ```
