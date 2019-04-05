@@ -11,6 +11,7 @@ npm install
 node app.js
 ```
 
+# 引用のチェック
 
 >引用テスト
 引用のしたマージンチェック上改行なし（一行になる）
@@ -43,3 +44,40 @@ node app.js
 
 
 ああ
+
+
+
+
+# コードブロックのチェック
+
+code あかん
+```
+function myFunction() {
+  console.log("test");
+}
+```
+
+code
+```
+
+function myFunction() {
+  console.log("test");
+}
+
+```
+
+code いける
+```
+function myFunction() {
+  console.log("test");
+}
+
+```
+
+code あかん
+```
+
+function myFunction() {
+  console.log("test");
+}
+```
